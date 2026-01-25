@@ -86,7 +86,7 @@ function App(){
         <NewsColumn sourceId="ie" title="Indian Express" />
       </main>
       <footer className="main-footer">
-        <p>© 2026 NewsMania. All rights reserved.</p>
+        <p>Made With ❤️ by Ashish Bairwa.</p>
       </footer>
     </div>
   );

@@ -12,9 +12,12 @@ A real time news dashboard that aggregate major headlines from India's top newsp
 * **Backend**: Node.js, Express.js, 'rss-parser'.
 * **Database**: MongoDB(With fallback mechanism).
 
-## Screenshots
-![Demo](client/public/Demo.png)
+## Demo
+### Images
+<img width="1687" height="935" alt="Image" src="https://github.com/user-attachments/assets/81acd071-e0e0-424a-ad06-4090c6515f44" />
 
+### Video
+https://github.com/user-attachments/assets/62f5d26a-5b5e-48f4-b9e8-fa6ea42db8f3
 
 ---
 ## How to Run

@@ -2,7 +2,7 @@
 A real time news dashboard that aggregate major headlines from India's top newspapers into a clean single-screen interface.
 
 ## Features
-* **Live Aggregation** : Simultanouesly fetches from *The Hindu*, *Time of India*, *Hindustan Times* and *Indian Express* usig RSS feed
+* **Live Aggregation** : Simultaneously fetches from *The Hindu*, *Time of India*, *Hindustan Times* and *Indian Express* using RSS feed
 *  **Dark Mode**: Fully supported dark theme.
 * **Time awareness**: Real-time clock and date display localized to 'en-IN'.
 * **Read State Tracking**: Visually dims article you have already visited.

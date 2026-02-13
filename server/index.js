@@ -8,7 +8,6 @@ const NewsCache = require('./models/NewsCache');
 
 const app = express();
 const parser = new Parser();
-const port = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
@@ -19,15 +18,15 @@ let isMongoConnected = false;
 
 
 mongoose.connect(process.env.MONGO_URI)
-    .then(() => {
-        console.log('Connected to MongoDB');
-        isMongoConnected = true;
-    })
-    .catch(err => {
-        console.log('Could not connect to MongoDB, using in-memory cache instead.');
-        console.log('To enable persistence, please install and run MongoDB');
-        isMongoConnected = false ;
-    });
+.then(() => {
+    console.log('Connected to MongoDB');
+    isMongoConnected = true;
+})
+.catch(err => {
+    console.log('Could not connect to MongoDB, using in-memory cache instead.');
+    console.log('To enable persistence, please install and run MongoDB');
+    isMongoConnected = false ;
+});
 
 const FEED_URLS = {
     thehindu: 'https://www.thehindu.com/feeder/default.rss',
@@ -49,16 +48,16 @@ const filterByHours = (articles, hours) => {
 
 app.get('/api/news', async (req, res)  => {
     const { source, hours } = req.query;
-
+    
     if(!source || !FEED_URLS[source]) {
         return res.status(400).json({error: 'Invalid/ Missing Source parameter'});
 
     }
-
+    
     try {
         let articles = null ;
         let lastUpdated = null ;
-
+        
         if(isMongoConnected){
             const cacheData = await NewsCache.findOne({ source});
             if(cacheData){
@@ -71,18 +70,18 @@ app.get('/api/news', async (req, res)  => {
                 lastUpdated = memoryCache[source].lastUpdated;
             }
         }
-
-
+        
+        
         if(articles && lastUpdated && (Date.now() - new Date(lastUpdated).getTime() < CACHE_DURATION)) {
             console.log(`Serving ${source} from cache (${isMongoConnected ? 'MongoDB' : 'Memory'})`);
             const timeWindow = hours ? parseInt(hours) : 5 ;
             return res.json(filterByHours(articles, timeWindow));
         }
-
+        
         // fetch Data
         console.log(`Fetching ${source} from RSS`);
         const feed = await parser.parseURL(FEED_URLS[source]);
-
+        
         const newArticles = feed.items.map(item => ({
             title:item.title,
             link:item.link,
@@ -90,7 +89,7 @@ app.get('/api/news', async (req, res)  => {
             contentSnippet: item.contentSnippet,
             categories: item.categories || []
         }));
-
+        
         //  Update cache
         if(isMongoConnected){
             await NewsCache.findOneAndUpdate(
@@ -104,26 +103,28 @@ app.get('/api/news', async (req, res)  => {
                 lastUpdated:Date.now()
             };
         }
-
+        
         //  time filter on data
         const timeWindow = hours ? parseInt(hours) : 5 ;
         res.json(filterByHours(newArticles, timeWindow));
-
+        
     } catch (err) {
         console.error(`Error fetching ${source}:`, err);
         res.status(500).json({error: 'Failed to fetch news'});
     }
 });
 
-app.listen(port, () =>  {
-    console.log(`Server running on port ${port}`);
-});
 
 
 const path = require("path");
 
 app.use(express.static(path.join(__dirname, "../client/dist")));
 
-app.get("/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/dist/index.html"));
+app.use((req, res) => {
+    res.sendFile(path.join(__dirname, "../client/dist/index.html"));
+});
+
+const port = process.env.PORT || 5000;
+app.listen(port, () =>  {
+    console.log(`Server running on port ${port}`);
 });

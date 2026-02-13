@@ -21,12 +21,12 @@ https://github.com/user-attachments/assets/62f5d26a-5b5e-48f4-b9e8-fa6ea42db8f3
 
 ---
 ## How to Run
-You need to run the **Backend** and **Frontend** in seperate terminals.
+You need to run the **Backend** and **Frontend** in separate terminals.
 ### 1. Start Backend
 ```bash
 cd server
 npm install
-npm rundev
+npm run dev
 # Ensure you have set up .env file as per .env.example file
 ```
 *Sever runs on :`Server running on port 5000`*

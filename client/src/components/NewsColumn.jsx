@@ -29,7 +29,7 @@ const NewsColumn = ({ sourceId, title}) => {
         setLoading(true);
         setError(null);
         try {
-            const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+            const apiUrl = (`${import.meta.env.VITE_API_URL}/news` );
             const response = await axios.get(`${apiUrl}/api/news?source=${sourceId}`);
             setArticles(response.data);
         } catch (err) {

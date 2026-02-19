@@ -3,12 +3,12 @@ import axios from "axios";
 import { formatDistanceToNow } from "date-fns";
 
 const SMART_TAGS = [
-  { keywords: "cricket", label: "Cricket", className: "tag-cricket" },
-  { keywords: "politics", label: "Politics", className: "tag-politics" },
-  { keywords: "tech", label: "Tech", className: "tag-tech" },
-  { keywords: "economy", label: "Economy", className: "tag-economy" },
-  { keywords: "market", label: "Market", className: "tag-market" },
-  { keywords: "world", label: "World", className: "tag-world" },
+  { keyword: "cricket", label: "Cricket", className: "tag-cricket" },
+  { keyword: "politics", label: "Politics", className: "tag-politics" },
+  { keyword: "tech", label: "Tech", className: "tag-tech" },
+  { keyword: "economy", label: "Economy", className: "tag-economy" },
+  { keyword: "market", label: "Market", className: "tag-market" },
+  { keyword: "world", label: "World", className: "tag-world" },
 ];
 
 const getSmartTags = (title = "") => {
@@ -66,7 +66,7 @@ const NewsColumn = ({ sourceId, title }) => {
         </button>
       </div>
 
-      <div className="article-list">
+      <div className="articles-list">
         {loading && (
           <p style={{ textAlign: "center", padding: "20px" }}>Loading...</p>
         )}
